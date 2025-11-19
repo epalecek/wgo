@@ -8,7 +8,7 @@ Ms. Cherie, a home health worker, comes by the house on Mondays/Wednesdays/Frida
 She can help with almost anything: Breakfast/Coffee/Laundry/Showers etc...  Just ask!
 
 
-MONEY:
+MONEY:  it's a gas
 --------------------------------------------------------------- 
 You have some...
 
