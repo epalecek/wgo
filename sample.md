@@ -10,14 +10,6 @@ She can help with almost anything: Breakfast/Coffee/Laundry/Showers etc...  Just
 
 MONEY:
 --------------------------------------------------------------- 
-As of today, November 2025, you have about $120,000 total between Raymond James and Truist Bank
-
-Your social security check gets deposited directly into your Truist Account every month, about $2000.
-
-Your monthly Harris Teeter check gets mailed and we deposit it into your Truist Account every month, $544.
-
-You have about $800 in cash on you that we keep in an envelope in the Kitchen.
-
-Your Will was setup in 2019, and per your wishes, Wayne, Joe, and I are the primary beneficiaries.
+You have some...
 
 Any other questions?  Write 'em down and we'll answer them!
