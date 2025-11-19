@@ -8,12 +8,10 @@ Ms. Cherie, a home health worker, comes by the house on Mondays/Wednesdays/Frida
 She can help with almost anything: Breakfast/Coffee/Laundry/Showers etc...  Just ask!
 
 
-MONEY:  it's a gas
+MONEY: 
 --------------------------------------------------------------- 
-You have some...
+
+Yes, ask me and I'll tell you about it!
 
 Any other questions?  Write 'em down and we'll answer them!
 
-Thanksgiving is in 9 DAYS!!!
-
-We're making your schnibbled beans.
