@@ -15,3 +15,5 @@ You have some...
 Any other questions?  Write 'em down and we'll answer them!
 
 Thanksgiving is in 9 DAYS!!!
+
+We're making your schnibbled beans.
