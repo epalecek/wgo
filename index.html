@@ -45,6 +45,55 @@
             color: #000;
         }
 
+        .datetime strong {
+            font-weight: 600;
+        }
+
+        .events-section {
+            margin-bottom: 4rem;
+            padding: 2rem;
+            border: 2px solid #000;
+        }
+
+        .events-section h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.01em;
+        }
+
+        .event {
+            padding: 1rem 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .event:last-child {
+            border-bottom: none;
+        }
+
+        .event-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .event-countdown {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #000;
+            margin-bottom: 0.25rem;
+        }
+
+        .event-date {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        .no-events {
+            color: #999;
+            font-style: italic;
+        }
+
         #content {
             margin-bottom: 5rem;
         }
@@ -176,6 +225,13 @@
             <div class="loading">Loading...</div>
         </div>
 
+        <div class="events-section">
+            <h2>Upcoming Events</h2>
+            <div id="events">
+                <div class="loading">Loading events...</div>
+            </div>
+        </div>
+
         <div class="cards">
             <div class="card">
                 <h2>Money</h2>
@@ -198,17 +254,20 @@
     <script>
         function updateDateTime() {
             const now = new Date();
-            const options = { 
+            const dateOptions = { 
                 weekday: 'long', 
                 year: 'numeric', 
                 month: 'long', 
-                day: 'numeric',
+                day: 'numeric'
+            };
+            const timeOptions = {
                 hour: 'numeric',
                 minute: '2-digit',
                 hour12: true
             };
-            const dateTimeString = now.toLocaleDateString('en-US', options);
-            document.getElementById('datetime').textContent = `Today is: ${dateTimeString}`;
+            const dateString = now.toLocaleDateString('en-US', dateOptions);
+            const timeString = now.toLocaleTimeString('en-US', timeOptions);
+            document.getElementById('datetime').innerHTML = `Today is: <strong>${dateString}</strong> at <strong>${timeString}</strong>`;
         }
 
         async function loadMarkdown() {
@@ -231,11 +290,108 @@
             }
         }
 
-        window.addEventListener('load', loadMarkdown);
+        async function loadEvents() {
+            const url = 'https://raw.githubusercontent.com/epalecek/wgo/refs/heads/main/events.md';
+            const eventsDiv = document.getElementById('events');
+
+            try {
+                const response = await fetch(url);
+                
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch events`);
+                }
+
+                const markdown = await response.text();
+                const events = parseEvents(markdown);
+                
+                if (events.length === 0) {
+                    eventsDiv.innerHTML = '<p class="no-events">No upcoming events</p>';
+                    return;
+                }
+
+                displayEvents(events);
+
+            } catch (error) {
+                eventsDiv.innerHTML = `<p class="no-events">No events file found. Create events.md to add events.</p>`;
+            }
+        }
+
+        function parseEvents(markdown) {
+            const lines = markdown.split('\n').filter(line => line.trim().startsWith('-'));
+            const events = [];
+
+            lines.forEach(line => {
+                // Format: - Event Title | 2025-11-25 | 2:00 PM
+                const parts = line.substring(1).split('|').map(p => p.trim());
+                if (parts.length >= 2) {
+                    events.push({
+                        title: parts[0],
+                        date: parts[1],
+                        time: parts[2] || null
+                    });
+                }
+            });
+
+            return events;
+        }
+
+        function displayEvents(events) {
+            const eventsDiv = document.getElementById('events');
+            const now = new Date();
+            now.setHours(0, 0, 0, 0); // Reset to start of day for comparison
+
+            let html = '';
+
+            events.forEach(event => {
+                const eventDate = new Date(event.date + 'T00:00:00');
+                const diffTime = eventDate - now;
+                const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+                let countdownText = '';
+                if (diffDays < 0) {
+                    countdownText = 'Past event';
+                } else if (diffDays === 0) {
+                    countdownText = 'Today!';
+                } else if (diffDays === 1) {
+                    countdownText = 'Tomorrow';
+                } else {
+                    countdownText = `in ${diffDays} days`;
+                }
+
+                const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                const formattedDate = eventDate.toLocaleDateString('en-US', dateOptions);
+                const timeString = event.time ? ` at ${event.time}` : '';
+
+                html += `
+                    <div class="event">
+                        <div class="event-title">${event.title}</div>
+                        <div class="event-countdown">${countdownText}</div>
+                        <div class="event-date">${formattedDate}${timeString}</div>
+                    </div>
+                `;
+            });
+
+            eventsDiv.innerHTML = html;
+        }
+
+        function updateEvents() {
+            const eventsDiv = document.getElementById('events');
+            if (eventsDiv.innerHTML && !eventsDiv.innerHTML.includes('Loading')) {
+                loadEvents();
+            }
+        }
+
+        window.addEventListener('load', () => {
+            loadMarkdown();
+            loadEvents();
+        });
         
         // Update datetime immediately and then every second
         updateDateTime();
         setInterval(updateDateTime, 1000);
+
+        // Update events countdown every minute
+        setInterval(updateEvents, 60000);
     </script>
 </body>
 </html>
