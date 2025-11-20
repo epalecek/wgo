@@ -57,6 +57,10 @@ header h1 {
 .event {
     padding: 1rem 0;
     border-bottom: 1px solid #e0e0e0;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
 }
 
 .event:last-child {
@@ -64,21 +68,48 @@ header h1 {
 }
 
 .event-title {
-    font-size: 1.25rem;
+    font-size: 1.1rem;
     font-weight: 600;
-    margin-bottom: 0.25rem;
 }
 
-.event-countdown {
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #000;
-    margin-bottom: 0.25rem;
+.event-separator {
+    color: #ccc;
+    font-weight: 300;
 }
 
 .event-date {
     font-size: 1rem;
     color: #666;
+}
+
+.event-countdown {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #000;
+}
+
+/* Mobile: stack vertically */
+@media (max-width: 768px) {
+    .event {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.25rem;
+    }
+    
+    .event-separator {
+        display: none;
+    }
+    
+    .event-title {
+        font-size: 1.25rem;
+        margin-bottom: 0.25rem;
+    }
+    
+    .event-countdown {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 0.25rem;
+    }
 }
 
 .no-events {

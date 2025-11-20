@@ -28,9 +28,8 @@
         <div class="cards">
             <div class="card">
                 <h2>Money</h2>
-                <div class="card-content">
-                    <p>Financial information and resources</p>
-                    <!-- Add your links here later -->
+                <div class="card-content" id="money-content">
+                    <p class="loading">Loading...</p>
                 </div>
             </div>
 
@@ -109,6 +108,26 @@
             }
         }
 
+        async function loadMoneyContent() {
+            const url = 'https://raw.githubusercontent.com/epalecek/wgo/refs/heads/main/dollars.md';
+            const moneyDiv = document.getElementById('money-content');
+
+            try {
+                const response = await fetch(url);
+                
+                if (!response.ok) {
+                    throw new Error(`Failed to fetch money content`);
+                }
+
+                const markdown = await response.text();
+                const html = marked.parse(markdown);
+                moneyDiv.innerHTML = html;
+
+            } catch (error) {
+                moneyDiv.innerHTML = `<p>Financial information and resources</p>`;
+            }
+        }
+
         function parseEvents(markdown) {
             const lines = markdown.split('\n').filter(line => line.trim().startsWith('-'));
             const events = [];
@@ -147,19 +166,21 @@
                     countdownText = 'Today!';
                 } else if (diffDays === 1) {
                     countdownText = 'Tomorrow';
-                } else {
-                    countdownText = `in ${diffDays} days`;
+                } else if (diffDays > 1) {
+                    countdownText = `${diffDays} days from today`;
                 }
 
-                const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                const dateOptions = { weekday: 'long', month: 'short', day: 'numeric', year: 'numeric' };
                 const formattedDate = eventDate.toLocaleDateString('en-US', dateOptions);
                 const timeString = event.time ? ` at ${event.time}` : '';
 
                 html += `
                     <div class="event">
-                        <div class="event-title">${event.title}</div>
-                        <div class="event-countdown">${countdownText}</div>
-                        <div class="event-date">${formattedDate}${timeString}</div>
+                        <span class="event-title">${event.title}</span>
+                        <span class="event-separator">|</span>
+                        <span class="event-date">${formattedDate}${timeString}</span>
+                        <span class="event-separator">|</span>
+                        <span class="event-countdown">${countdownText}</span>
                     </div>
                 `;
             });
@@ -177,6 +198,7 @@
         window.addEventListener('load', () => {
             loadMarkdown();
             loadEvents();
+            loadMoneyContent();
         });
         
         // Update datetime immediately and then every second
