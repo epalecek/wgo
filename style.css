@@ -9,7 +9,7 @@ body {
     line-height: 1.8;
     color: #000;
     background: #fff;
-    font-size: 20px;
+    font-size: 1.5rem;
 }
 
 .container {
@@ -189,7 +189,7 @@ header h1 {
 /* Override GLightbox styles to match our minimalist design */
 .glightbox-clean .gslide-description {
     background: #fff;
-    color: #000;
+    color: #434242;
 }
 
 .glightbox-clean .gdesc-inner {
@@ -271,7 +271,7 @@ header h1 {
     }
 
     body {
-        font-size: 16px;
+        font-size: 1.125rem;
     }
 }
 
