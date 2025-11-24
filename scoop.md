@@ -11,3 +11,6 @@ Thanksgiving week is almost here!   We are hosting about 15-20 people on Thursda
 
 Joe is flying down to Austin (about 3 hours West of here) to visit Ralph.  Joe wants to come out and see you while he is in Texas, so he and Ralph are driving here on Wednesday 11/26!  WOOHOO!  
 
+11/24/25: Ben and Nikki welcomed your 3rd GREAT Grandchild !!!  Baby Eliza!
+
+![Baby Eliza](https://whatsgoingon.now/images/20251124_BabyEliza.jpg)

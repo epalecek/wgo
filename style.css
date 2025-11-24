@@ -164,6 +164,39 @@ header h1 {
     margin: 2rem 0;
 }
 
+
+/* Image styling for lightbox */
+#content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    cursor: zoom-in;
+    transition: opacity 0.2s ease;
+    margin: 1.5rem 0;
+    display: block;
+}
+
+#content img:hover {
+    opacity: 0.9;
+}
+
+#content a.glightbox {
+    display: block;
+    border: none;
+    text-decoration: none;
+}
+
+/* Override GLightbox styles to match our minimalist design */
+.glightbox-clean .gslide-description {
+    background: #fff;
+    color: #000;
+}
+
+.glightbox-clean .gdesc-inner {
+    padding: 1.5rem;
+}
+/* end image styling */
+
 .cards {
     display: grid;
     grid-template-columns: 1fr 1fr;

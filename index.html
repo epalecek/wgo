@@ -5,12 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>What's Going On</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js"></script>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>What's Going On?</h1>
+            <h1>What's Going On</h1>
             <div class="datetime" id="datetime"></div>
         </header>
 
@@ -76,6 +78,9 @@
                 const markdown = await response.text();
                 const html = marked.parse(markdown);
                 contentDiv.innerHTML = html;
+
+                // Initialize lightbox for images
+                initializeLightbox();
 
             } catch (error) {
                 contentDiv.innerHTML = `<p class="loading">Unable to load content. Please refresh the page.</p>`;
@@ -193,6 +198,31 @@
             if (eventsDiv.innerHTML && !eventsDiv.innerHTML.includes('Loading')) {
                 loadEvents();
             }
+        }
+
+        function initializeLightbox() {
+            // Add glightbox class to all images in content
+            const images = document.querySelectorAll('#content img');
+            images.forEach(img => {
+                // Wrap image in anchor if not already wrapped
+                if (img.parentElement.tagName !== 'A') {
+                    const link = document.createElement('a');
+                    link.href = img.src;
+                    link.className = 'glightbox';
+                    link.setAttribute('data-gallery', 'content-gallery');
+                    img.parentNode.insertBefore(link, img);
+                    link.appendChild(img);
+                }
+            });
+
+            // Initialize GLightbox
+            GLightbox({
+                touchNavigation: true,
+                loop: true,
+                autoplayVideos: true,
+                closeButton: true,
+                skin: 'clean'
+            });
         }
 
         window.addEventListener('load', () => {
